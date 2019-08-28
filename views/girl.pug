@@ -1,0 +1,40 @@
+extends ./layout/layout
+
+block content
+    .content_header
+        p Girls
+    .form_container
+        .girl_search_container
+        form(action='/ui/girl', method='post')
+            label name
+            input.input_text(required="required", type='text', name='name')
+            label nickname
+            input.input_text(required="required", type='text', name='nickname')
+            label instagram id
+            input.input_text(required="required", type='text', name='instagramId')
+            input(type='submit', value='submit')
+    .content_body
+        .girls_list
+            if girls
+                if girls.length
+                    each girl in girls
+                        .container
+                            .girl_container
+                                .girl_name
+                                    p #{girl.name}
+                                .girl_nickname
+                                    p #{girl.nickname}
+                                each instagram in girl.instagram
+                                    .girl_instagramId
+                                        a(href=`http://www.instagram.com/${instagram.id}`)
+                                            p #{instagram.id}
+                            .tag_container
+                                form(action=`/ui/girl/tag?girl=${girl.id}`, method="post")
+                                    each tag in tags
+                                        .checkbox_container
+                                            input(type="checkbox" name=`tags` value=`${tag.id}`)
+                                            div #{tag.name}
+                                    button.tag_apply_girl apply
+                                
+                else
+                    p.empty_list There has no contents.

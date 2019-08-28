@@ -1,0 +1,22 @@
+extends ./layout/layout
+
+block content
+    .content_header
+        p Tags
+    .form_container
+        form(action='/ui/tags', method='post')
+            label(required="required") name
+            input.input_text(required="required", type='text', name='name')
+            input(type='submit', value='submit')
+    .content_body
+        if tags
+            if tags.length
+                each tag in tags
+                    .tag_container
+                        label name
+                        .tag_name #{tag.name}
+                        button.tag_delete(id=`${tag._id}` onclick=`deleteTag(this.id)`) delete
+            else
+                p.empty_list There has no contents.
+        
+    script(src="/static/scripts/editTag.js")

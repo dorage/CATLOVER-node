@@ -1,0 +1,18 @@
+extends ./layout/layout
+
+block content
+    .content_header
+        p Tasks
+    .content_body
+        if tasks
+            if tasks.length
+                each task in tasks
+                    .task_container
+                        .task_name id / #{task.instagram.id}
+                        .crawler_name crawler / #{task.crawlerName || "None"}
+                        .state state / #{task.state}
+                        .date date / #{task.updatedDate || "None"}
+                        button.task_return(id=`${task._id}` onclick="resetTask(this.id)") reset
+                script(src="/static/scripts/editTask.js")
+            else
+                p.empty_list There has no contents.
