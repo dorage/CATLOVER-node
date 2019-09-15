@@ -23,11 +23,33 @@
     font-size: 30px;
     font-weight: 700;
 }
+/* content_index */
+.content_index {
+    width: 90%;
+    margin: 0 auto;
+}
+.content_index > ul {
+    display: flex;
+}
+.content_index > ul > a > li {
+    font-size: 20px;
+    text-decoration: none;
+    list-style-type: none;
+}
 /* content_container*/
 .content_body {
     color: black;
     display: flex;
     flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
+    background-color: #04adbf;
+}
+.content_body_tags {
+    color: black;
+    display: flex;
+    flex-direction: row;
+
     width: 90%;
     margin: 0 auto;
     background-color: #04adbf;

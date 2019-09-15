@@ -4,12 +4,12 @@ import Instagram from '../Models/Instagram';
 import Girl from '../Models/Girl';
 import User from '../Models/User';
 
-export const verifyIdToken = async (tokenId) => {
+export const verifyIdToken = async tokenId => {
     const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
     const client = new OAuth2Client(CLIENT_ID);
     const ticket = await client.verifyIdToken({
         idToken: tokenId,
-        audience: CLIENT_ID,
+        audience: CLIENT_ID
     });
 
     return ticket.getPayload();

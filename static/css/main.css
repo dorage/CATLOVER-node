@@ -60,6 +60,9 @@
     margin-top: 50px;
     margin: 0 auto;
 }
+.img_container {
+    margin-top: 25px;
+}
 .tag_container {
     width: 100%;
 }

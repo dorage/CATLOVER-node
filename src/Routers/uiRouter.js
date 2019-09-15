@@ -7,6 +7,7 @@ import {
     postTags,
     deleteTag,
     postGirlTags,
+    makeTagList
 } from '../Controllers/uiController';
 
 const uiRouter = new Router();

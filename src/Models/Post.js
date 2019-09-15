@@ -1,17 +1,18 @@
 import mongoose from 'mongoose';
 
 const postSchema = mongoose.Schema({
-    view: Number,
-    like: Number,
     isImage: Boolean,
     link: String,
+    like: Number,
     images: [String],
-    tags: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Tag',
-        },
-    ],
+    instagram: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Instagram'
+    },
+    girl: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Gril'
+    }
 });
 
 const model = mongoose.model('Post', postSchema);

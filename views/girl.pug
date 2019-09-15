@@ -13,23 +13,30 @@ block content
             label instagram id
             input.input_text(required="required", type='text', name='instagramId')
             input(type='submit', value='submit')
+    .content_index
+        - var n = 1;
+        ul
+            while n <= totalPages
+                a(href=`/ui/girl?page=${n}`)
+                    li= n++
     .content_body
         .girls_list
-            if girls
-                if girls.length
-                    each girl in girls
+            if results
+                if results.length
+                    each result in results
                         .container
                             .girl_container
                                 .girl_name
-                                    p #{girl.name}
+                                    p #{result.girl.name}
                                 .girl_nickname
-                                    p #{girl.nickname}
-                                each instagram in girl.instagram
-                                    .girl_instagramId
-                                        a(href=`http://www.instagram.com/${instagram.id}`)
-                                            p #{instagram.id}
+                                    p #{result.girl.nickname}
+                                each instagram in result.instagram
+                                    a(href=`https://www.instagram.com/${instagram.id}`)
+                                        p #{instagram.id}
+                            .img_container
+                                img(src=`${result.instagram[0].profile}`)
                             .tag_container
-                                form(action=`/ui/girl/tag?girl=${girl.id}`, method="post")
+                                form(action=`/ui/girl/tag?girl=${result.girl.id}`, method="post")
                                     each tag in tags
                                         .checkbox_container
                                             input(type="checkbox" name=`tags` value=`${tag.id}`)

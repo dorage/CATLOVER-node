@@ -2,21 +2,14 @@ import mongoose from 'mongoose';
 
 const girlSchema = mongoose.Schema({
     name: String,
-    nickname: String,
     like: Number,
-    profile: String,
-    instagram: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Instagram',
-        },
-    ],
+    nickname: String,
     tags: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Tag',
-        },
-    ],
+            ref: 'Tag'
+        }
+    ]
 });
 
 const model = mongoose.model('Girl', girlSchema);

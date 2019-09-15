@@ -5,12 +5,12 @@ import { taskState } from '../var';
 import { Response } from '../jsons';
 
 // 처음 girl 모델 생성시 task 모델 동시 생성
-export const createTask = (instagram) => {
+export const createTask = instagram => {
     DPrint('[createTask()] Start');
     const task = new Task({
         state: taskState.pending,
         instagram,
-        crawler: undefined,
+        crawler: undefined
     });
     task.save();
     DPrint('[createTask()] End');
@@ -24,7 +24,7 @@ export const getTask = async (req, res) => {
         const task = await Task.findOne({ state: taskState.pending })
             .sort({ id: -1 })
             .populate({
-                path: 'instagram',
+                path: 'instagram'
             });
         if (task === undefined) res.send(Response.noTask);
         // update task
@@ -41,31 +41,37 @@ export const getTask = async (req, res) => {
 export const postTask = async (req, res) => {
     // stringfy 된 json object임
     const { crawler, strData } = req.body;
-    const jsonData = JSON.parse(strData);
+    const { id, profile, posts } = JSON.parse(strData);
     try {
         const task = await Task.findOne({
             crawler,
-            state: taskState.crawling,
-        }).populate({
-            path: 'instagram',
-            populate: { path: 'posts' },
-        });
+            state: taskState.crawling
+        }).populate({ path: 'instagram', populate: { path: 'girl' } });
         // task 가 없을시 실패 반환
         if (task === undefined) res.send(Response.forcedResetTask);
         task.state = taskState.done;
         task.crawler = undefined;
         task.updatedDate = new Date();
-        jsonData.posts.forEach((element) => {
-            const { link, images, isImage } = element;
-            const post = new Post({
+        // post 생성
+        for (let index = 0; index < posts.length; index++) {
+            const { link, images, isImage } = posts[index];
+            // 중복 체크
+            let post = await Post.find({ link });
+            if (post.length !== 0) {
+                continue;
+            }
+            post = new Post({
                 link,
                 images,
                 isImage,
                 like: 0,
+                instagram: task.instagram,
+                girl: task.instagram.girl
             });
-            task.instagram.posts.push(post);
             post.save();
-        });
+        }
+        // profile 이미지 업데이트
+        task.instagram.profile = profile;
         task.instagram.save();
         task.save();
         res.send(Response.successful);

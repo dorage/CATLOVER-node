@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import {
-    getTop20,
+    getTodayPick,
     getPostDetail,
     getGirlDetail,
     getGirlRank,
@@ -10,13 +10,15 @@ import {
     getPostLike,
     postGirlLike,
     postPostLike,
+    getTags,
+    getTagDetail
 } from '../Controllers/apiController';
 import { postAuth, getUser, getValidate } from '../Controllers/authController';
 
 const apiRouter = new Router();
 
 // main 화면 사진 20장 choice
-apiRouter.get('/top20', getTop20);
+apiRouter.get('/todaypick', getTodayPick);
 // detail
 apiRouter.get('/girl/:id', getGirlDetail);
 apiRouter.get('/post/:id', getPostDetail);
@@ -27,12 +29,12 @@ apiRouter.post('/girl/:id/like', postGirlLike, getGirlLike);
 apiRouter.post('/post/:id/like', postPostLike, getPostLike);
 // ranks
 apiRouter.get('/total/rank', getTotalRank);
-apiRouter.get('/girl/rank', getGirlRank);
-apiRouter.get('/post/rank', getPostRank);
 // auth
 apiRouter.get('/auth/validate', getValidate);
 apiRouter.post('/auth/login', postAuth);
 apiRouter.get('/auth/user', getUser);
-// getMainGirls
+// tags
+apiRouter.get('/tags', getTags);
+apiRouter.get('/tags/:name', getTagDetail);
 
 export default apiRouter;

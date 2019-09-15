@@ -1,6 +1,8 @@
 import Girl from '../Models/Girl';
 import Task from '../Models/Task';
+import Post from '../Models/Post';
 import Tag from '../Models/Tag';
+import TagList from '../Models/TagList';
 import Instagram from '../Models/Instagram';
 import { createTask } from './taskController';
 
@@ -12,8 +14,8 @@ export const getTask = async (req, res) => {
             .populate({
                 path: 'instagram',
                 populate: {
-                    path: 'girl',
-                },
+                    path: 'girl'
+                }
             });
         res.render('task', { tasks });
     } catch (e) {
@@ -23,13 +25,32 @@ export const getTask = async (req, res) => {
 };
 
 export const getGirl = async (req, res) => {
+    const { page } = req.query;
     try {
-        const girls = await Girl.find({})
-            .sort({ _id: -1 })
-            .limit(20)
-            .populate('instagram');
+        const results = [];
+        // 총 애완동물 / 20 - 한 페이지 20
+        const totalPages = Math.ceil((await Girl.countDocuments()) / 20);
+        let girls = null;
+        // page 처리
+        if (Number(page) && Number(page) <= totalPages)
+            girls = await Girl.find({})
+                .sort({ _id: -1 })
+                .skip(20 * (Number(page) - 1))
+                .limit(20);
+        else
+            girls = await Girl.find({})
+                .sort({ _id: -1 })
+                .limit(20);
+        for (let i = 0; i < girls.length; i++) {
+            const instagram = await Instagram.find(
+                { girl: girls[i] },
+                { id: true, profile: true }
+            );
+            results.push({ girl: girls[i], instagram: instagram });
+        }
+        //.populate('instagram');
         const tags = await Tag.find();
-        res.render('girl', { girls, tags });
+        res.render('girl', { results, tags, totalPages });
     } catch (e) {
         console.log(e);
         res.render('girl');
@@ -38,33 +59,39 @@ export const getGirl = async (req, res) => {
 
 export const postGirl = async (req, res) => {
     const { name, nickname, instagramId } = req.body;
+    const { pages } = req.query;
     try {
         if (name === '' || nickname === '' || instagramId === '') throw 'blank';
         if (await Instagram.findOne({ id: instagramId })) throw 'same thing';
-        const instagram = new Instagram({ id: instagramId });
-        const girl = new Girl({
-            name,
-            nickname,
-            instagram,
-            like: 0,
-        });
+
+        let girl = await Girl.findOne({ name, nickname });
+        if (!girl)
+            girl = new Girl({
+                name,
+                nickname,
+                like: 0
+            });
+
+        const instagram = new Instagram({ id: instagramId, girl });
+
         girl.save();
         instagram.save();
 
         createTask(instagram);
-
-        res.redirect('/ui/girl');
+        if (pages) res.redirect(`/ui/girl?pages=${pages}`);
+        else res.redirect(`/ui/girl`);
     } catch (e) {
         console.log(e);
-        res.redirect('/ui/girl');
+        if (pages) res.redirect(`/ui/girl?pages=${pages}`);
+        else res.redirect(`/ui/girl`);
     }
 };
 
 export const postGirlTags = async (req, res) => {
-    const { girl } = req.query;
+    const { girl: girlId } = req.query;
     const { tags } = req.body;
     try {
-        await Girl.findByIdAndUpdate(girl, { tags }, { new: true });
+        await Girl.findByIdAndUpdate(girlId, { tags }, { new: true });
         res.redirect('/ui/girl');
     } catch (e) {
         console.log(e);
