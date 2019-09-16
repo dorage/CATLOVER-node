@@ -1,0 +1,8 @@
+extends ./layout/layout
+
+block content
+    .login_container
+        form(action='/ui/login' method='post')
+            p Admin Login
+            input(required="required" type="id", placeholder="Id..", name='id')
+            input.submit(type='submit', value='login')

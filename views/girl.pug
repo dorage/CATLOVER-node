@@ -2,7 +2,7 @@ extends ./layout/layout
 
 block content
     .content_header
-        p Girls
+        p Cats
     .form_container
         .girl_search_container
         form(action='/ui/girl', method='post')
@@ -35,13 +35,15 @@ block content
                                         p #{instagram.id}
                             .img_container
                                 img(src=`${result.instagram[0].profile}`)
-                            .tag_container
+                            .tag_selection_container
                                 form(action=`/ui/girl/tag?girl=${result.girl.id}`, method="post")
-                                    each tag in tags
-                                        .checkbox_container
-                                            input(type="checkbox" name=`tags` value=`${tag.id}`)
-                                            div #{tag.name}
-                                    button.tag_apply_girl apply
+                                    .checkboxes_container
+                                        each tag in tags
+                                            .checkbox_container
+                                                input(type="checkbox" name=`tags` value=`${tag.id}`)
+                                                div #{tag.name}
+                                    .button_container
+                                        button.tag_apply_girl apply
                                 
                 else
                     p.empty_list There has no contents.

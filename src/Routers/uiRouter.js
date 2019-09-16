@@ -7,23 +7,27 @@ import {
     postTags,
     deleteTag,
     postGirlTags,
-    makeTagList
+    makeTagList,
+    getLogin,
+    postLogin
 } from '../Controllers/uiController';
+import { requiredLogin, noRequiredLogin } from '../middlewares';
 
 const uiRouter = new Router();
 
-uiRouter.get('/', getTask);
-uiRouter.get('/task', getTask);
+uiRouter.get('/', requiredLogin, getTask);
 
-uiRouter.get('/girl', getGirl);
-uiRouter.post('/girl', postGirl);
-uiRouter.post('/girl/tag', postGirlTags);
+uiRouter.get('/login', noRequiredLogin, getLogin);
+uiRouter.post('/login', noRequiredLogin, postLogin);
 
-uiRouter.get('/post');
-uiRouter.post('/post');
+uiRouter.get('/task', requiredLogin, getTask);
 
-uiRouter.get('/tags', getTags);
-uiRouter.post('/tags', postTags);
-uiRouter.delete('/tags', deleteTag);
+uiRouter.get('/girl', requiredLogin, getGirl);
+uiRouter.post('/girl', requiredLogin, postGirl);
+uiRouter.post('/girl/tag', requiredLogin, postGirlTags);
+
+uiRouter.get('/tags', requiredLogin, getTags);
+uiRouter.post('/tags', requiredLogin, postTags);
+uiRouter.delete('/tags', requiredLogin, deleteTag);
 
 export default uiRouter;
