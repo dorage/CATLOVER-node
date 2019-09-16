@@ -2,7 +2,8 @@
 
 > API서버.
 
-크롤링할 대상과 프론트에서 보여줄것을 전송해주는 api 서버
+크롤링할 대상과 프론트에서 보여줄것을 전송해주는 api 서버<br>
+Express, NodeJS, Mongoose, PUG TemplateEngine 사용
 
 # 페이지
 
@@ -33,7 +34,7 @@ npm start
 
 ## 정보
 
-이름 – baloonflower554@gmail.com
+이강현 – baloonflower554@gmail.com
 
 <!-- Markdown link & img dfn's -->
 
