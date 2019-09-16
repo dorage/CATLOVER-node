@@ -1,9 +1,15 @@
-# Hottie-node
+# CATLOVER-API
 
 > API서버.
 
 크롤링할 대상과 프론트에서 보여줄것을 전송해주는 api 서버<br>
 Express, NodeJS, Mongoose, PUG TemplateEngine 사용
+
+# 링크
+
+-   CATLOVER 페이지 - [[링크]](http://www.catloverlife.com/)
+-   CATLOVER API 페이지 - [[링크]](http://3.220.98.25:8383/ui)
+-   CATLOVER-REACT 깃허브 - [[링크]](https://github.com/dorage/CATLOVER-react)
 
 # 페이지
 
