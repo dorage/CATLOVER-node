@@ -2,7 +2,8 @@
     "name": "hottie-node",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon --exec babel-node src/index.js"
+        "start": "nodemon --exec babel-node src/index.js",
+        "server": "forever start -c node_modules/.bin/babel-node src/index.js"
     },
     "dependencies": {
         "body-parser": "^1.19.0",
