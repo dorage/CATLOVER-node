@@ -3,11 +3,14 @@ import app from './express';
 
 dotenv.config();
 
+let url;
 let port;
 if (process.env.NODE_ENV === 'development') {
+    url = process.env.url || 'localhost';
     port = process.env.PORT || 4000;
-} else if (process.env.NODE_ENV === 'production') {
-    port = 80;
+} else if (process.env.NODE_ENV === 'deployment') {
+    url = process.env.url;
+    port = 8000;
 } else {
     port = 4000;
 }
