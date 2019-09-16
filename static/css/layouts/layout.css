@@ -45,12 +45,17 @@
     margin: 0 auto;
     background-color: #04adbf;
 }
-.content_body_tags {
+.content_body_grid {
     color: black;
-    display: flex;
-    flex-direction: row;
+    display: grid;
 
     width: 90%;
     margin: 0 auto;
     background-color: #04adbf;
+    padding: 5px;
+    grid-template-columns: auto auto auto auto auto auto auto;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
+    grid-column-start: 1;
+    grid-column-end: 7;
 }

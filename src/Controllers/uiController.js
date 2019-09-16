@@ -1,3 +1,4 @@
+import Admin from '../Models/Admin';
 import Girl from '../Models/Girl';
 import Task from '../Models/Task';
 import Post from '../Models/Post';
@@ -5,6 +6,23 @@ import Tag from '../Models/Tag';
 import TagList from '../Models/TagList';
 import Instagram from '../Models/Instagram';
 import { createTask } from './taskController';
+
+export const getLogin = async (req, res) => {
+    res.render('login');
+};
+export const postLogin = async (req, res, next) => {
+    const { id } = req.body;
+    try {
+        const admin = await Admin.findOne({ id });
+        if (admin) {
+            const session = req.session;
+            session.user = admin;
+        }
+        res.redirect('/ui');
+    } catch (e) {
+        next();
+    }
+};
 
 export const getTask = async (req, res) => {
     try {

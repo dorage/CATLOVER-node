@@ -44,16 +44,20 @@ export const getGirlDetail = async (req, res) => {
         const girl = await Girl.findById(id).populate('tags');
         const instagram = await Instagram.find({ girl });
         const cntPost = await Post.countDocuments();
+        let endOfPage = false;
         let post = null;
-        if (Number(page) === -1 || Number(page) * 20 - 19 > cntPost) {
+        if (Number(page) === -1) {
+            // 기본페이지
             post = await Post.find({ girl, isImage: true }).limit(20);
+        } else if (Number(page) * 20 - 19 > cntPost) {
+            // 추가페이지가 초과되었을때
+            endOfPage = true;
         } else {
-            console.log('skip');
             post = await Post.find({ girl, isImage: true })
                 .skip(20 * (Number(page) - 1))
                 .limit(20);
         }
-        res.send({ results: { girl, instagram, post } });
+        res.send({ results: { girl, instagram, post }, endOfPage });
     } catch (e) {
         console.log(e);
         res.send(Response.error(e));
@@ -193,13 +197,11 @@ export const postGirlLike = async (req, res, next) => {
         originalLike = girl.like;
 
         if (user.girls && user.girls.includes(girl._id)) {
-            console.log('pull');
             girl.like--;
             girl.save();
             user.girls.pull(girl);
             user.save();
         } else {
-            console.log('push');
             girl.like++;
             girl.save();
             user.girls.push(girl);
@@ -232,12 +234,25 @@ export const getTags = async (req, res) => {
 
 export const getTagDetail = async (req, res) => {
     const { name } = req.params;
-    console.log(name);
+    const { page } = req.query;
     try {
         const tag = await Tag.findOne({ name });
         const tagList = await TagList.findOne({ tag }).populate('posts');
-        const posts = tagList.posts;
-        res.send({ results: { posts } });
+        const cntPost = tagList.posts.length;
+        let endOfPage = false;
+        let posts = null;
+        if (Number(page) === -1) {
+            // 기본페이지
+            posts = tagList.posts.slice(0, 20);
+        } else if (Number(page) * 20 - 19 > cntPost) {
+            // 추가페이지가 초과되었을때
+            endOfPage = true;
+        } else {
+            const start = (page - 1) * 20;
+            const end = page * 20;
+            posts = tagList.posts.slice(start, end);
+        }
+        res.send({ results: { posts }, endOfPage });
     } catch (e) {
         console.log(e);
         res.send(Response.error(e));

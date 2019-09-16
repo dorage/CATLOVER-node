@@ -6,6 +6,28 @@ import Post from './Models/Post';
 import Girl from './Models/Girl';
 import { Response } from './jsons';
 
+export const localsMiddleware = (req, res, next) => {
+    next();
+};
+
+export const requiredLogin = (req, res, next) => {
+    const session = req.session;
+    if (session.user) {
+        next();
+    } else {
+        res.redirect('/ui/login');
+    }
+};
+
+export const noRequiredLogin = (req, res, next) => {
+    const session = req.session;
+    if (session.user) {
+        res.redirect('/ui');
+    } else {
+        next();
+    }
+};
+
 export const DPrint = text => {
     if (process.env.NODE_ENV === 'development') console.log(text);
 };
@@ -21,9 +43,15 @@ export const checkCrawler = async (req, res, next) => {
 };
 
 // 1 day = 24 * 60 * 60 * 1000
-export const Routine = (callback, time) => {
-    callback();
-    setTimeout(Routine, time);
+export const Routine = (callback, time, parameters = null) => {
+    if (parameters === null) {
+        callback();
+    } else {
+        callback(...parameters);
+    }
+    setTimeout(() => {
+        Routine(callback, time, parameters);
+    }, time);
 };
 
 // tagList
