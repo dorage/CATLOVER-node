@@ -6,10 +6,10 @@ dotenv.config();
 let url;
 let port;
 if (process.env.NODE_ENV === 'development') {
-    url = process.env.url || 'localhost';
+    url = process.env.URL || 'localhost';
     port = process.env.PORT || 4000;
 } else if (process.env.NODE_ENV === 'deployment') {
-    url = process.env.url;
+    url = process.env.URL;
     port = 8000;
 } else {
     port = 4000;
