@@ -10,12 +10,12 @@ if (process.env.NODE_ENV === 'development') {
     port = process.env.PORT || 4000;
 } else if (process.env.NODE_ENV === 'deployment') {
     url = process.env.URL;
-    port = 8000;
+    port = process.env.Port;
 } else {
     port = 4000;
 }
 const handleListen = () => {
-    console.log(`Listening On : http://localhost:${port}`);
+    console.log(`Listening On : http://${url}:${port}`);
 };
 
 app.listen(port, handleListen);
