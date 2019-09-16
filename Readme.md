@@ -34,7 +34,7 @@ npm start
 
 ## 정보
 
-이강현 – baloonflower554@gmail.com
+이강현 – baloonflower554@gmail.com - 010-2371-9722
 
 <!-- Markdown link & img dfn's -->
 
