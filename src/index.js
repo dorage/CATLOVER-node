@@ -3,17 +3,9 @@ import app from './express';
 
 dotenv.config();
 
-let url;
-let port;
-if (process.env.NODE_ENV === 'development') {
-    url = process.env.URL || 'localhost';
-    port = process.env.PORT || 4000;
-} else if (process.env.NODE_ENV === 'deployment') {
-    url = process.env.URL;
-    port = process.env.Port;
-} else {
-    port = 4000;
-}
+const url = process.env.URL || 'localhost';
+const port = process.env.PORT || 4000;
+
 const handleListen = () => {
     console.log(`Listening On : http://${url}:${port}`);
 };
