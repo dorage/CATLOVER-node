@@ -8,6 +8,10 @@ import TagList from '../Models/TagList';
 import { verifyIdToken } from './authController';
 import { DPrint, shuffleArray } from '../middlewares';
 
+export const getAPI = (req, res) => {
+    res.send({ greeting: 'hello' });
+};
+
 export const getTodayPick = async (req, res) => {
     try {
         let todayPick = await Post.find(

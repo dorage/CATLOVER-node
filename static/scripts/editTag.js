@@ -6,6 +6,6 @@ function deleteTag(id) {
         console.log(post);
         location.reload();
     };
-    xhttp.open('DELETE', `http://localhost:4000/ui/tags?id=${id}`, true);
+    xhttp.open('DELETE', `http://3.220.98.25:8383/ui/tags?id=${id}`, true);
     xhttp.send();
 }

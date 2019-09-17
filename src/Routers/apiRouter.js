@@ -11,12 +11,15 @@ import {
     postGirlLike,
     postPostLike,
     getTags,
-    getTagDetail
+    getTagDetail,
+    getAPI
 } from '../Controllers/apiController';
 import { postAuth, getUser, getValidate } from '../Controllers/authController';
 
 const apiRouter = new Router();
 
+// test
+apiRouter.get('/', getAPI);
 // main 화면 사진 20장 choice
 apiRouter.get('/todaypick', getTodayPick);
 // detail
