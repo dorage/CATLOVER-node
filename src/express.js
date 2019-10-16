@@ -5,6 +5,10 @@ import express from 'express';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 import session from 'express-session';
+import https from 'https';
+import fs from 'fs';
+import path from 'path';
+import io from 'socket.io';
 
 import './db';
 import uiRouter from './Routers/uiRouter';
@@ -13,10 +17,18 @@ import taskRouter from './Routers/taskRouter';
 import { Routine, updateTagList, localsMiddleware } from './middlewares';
 
 const app = express();
+const certOptions = {
+    key: fs.readFileSync(path.resolve('cert/private.pem')),
+    cert: fs.readFileSync(path.resolve('cert/cert.pem')),
+    passphrase: 'ener720713'
+};
+const httpsServer = https.createServer(certOptions, app);
 const MongoStore = connetMongo(session);
 
 // template enginne
 app.set('view engine', 'pug');
+// socket io
+app.set('io', io);
 
 // middlewares
 app.use(helmet());
@@ -42,7 +54,9 @@ app.use(
 // Routines
 Routine(updateTagList, 60 * 60 * 1000); // 1 hour
 
+// static
 app.use('/static', express.static(`${__dirname}/../static`));
+// local middleware
 app.use(localsMiddleware);
 
 // router
