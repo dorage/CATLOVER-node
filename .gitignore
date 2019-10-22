@@ -1,5 +1,4 @@
 package-lock.json
-cert
 
 # Logs
 logs
@@ -86,4 +85,5 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-build
+build/
+cert/

@@ -1,4 +1,3 @@
-import { OAuth2Client } from 'google-auth-library';
 import Post from '../Models/Post';
 import Instagram from '../Models/Instagram';
 import Girl from '../Models/Girl';
