@@ -1,7 +1,13 @@
 import passport from 'passport';
-import User from './models/Admin';
+import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
+import { Strategy as FacebookStrategy } from 'passport-facebook';
+import { googleConfig, facebookConfig } from './config';
 
-passport.use(User.createStrategy());
+const callback = (accessToken, refreshToken, profile, cb) => cb(null, profile);
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser((user, cb) => cb(null, user));
+passport.deserializeUser((obj, cb) => cb(null, obj));
+
+//passport.use(new TwitterStrategy(twitterConfig, callback));
+passport.use(new GoogleStrategy(googleConfig, callback));
+passport.use(new FacebookStrategy(facebookConfig, callback));

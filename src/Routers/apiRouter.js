@@ -14,7 +14,6 @@ import {
     getTagDetail,
     getAPI
 } from '../Controllers/apiController';
-import { postAuth, getUser, getValidate } from '../Controllers/authController';
 
 const apiRouter = new Router();
 
@@ -32,10 +31,6 @@ apiRouter.post('/girl/:id/like', postGirlLike, getGirlLike);
 apiRouter.post('/post/:id/like', postPostLike, getPostLike);
 // ranks
 apiRouter.get('/total/rank', getTotalRank);
-// auth
-apiRouter.get('/auth/validate', getValidate);
-apiRouter.post('/auth/login', postAuth);
-apiRouter.get('/auth/user', getUser);
 // tags
 apiRouter.get('/tags', getTags);
 apiRouter.get('/tags/:name', getTagDetail);

@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import app from './express';
+import httpsServer from './express';
 
 dotenv.config();
 
@@ -9,4 +9,4 @@ const handleListen = () => {
     console.log(`Listening On : http://localhost:${port}`);
 };
 
-app.listen(port, handleListen);
+httpsServer.listen(port, handleListen);

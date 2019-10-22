@@ -1,27 +1,25 @@
 import mongoose from 'mongoose';
 
 const userSchema = mongoose.Schema({
-    name: String,
-    email: String,
-    userid: String,
+    id: String,
     posts: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Post',
-        },
+            ref: 'Post'
+        }
     ],
     girls: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Girl',
-        },
+            ref: 'Girl'
+        }
     ],
     tags: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Tag',
-        },
-    ],
+            ref: 'Tag'
+        }
+    ]
 });
 
 const model = mongoose.model('User', userSchema);
