@@ -4,7 +4,7 @@ import {
     postTask,
     resetTask,
     deleteTask,
-} from '../Controllers/taskController';
+} from '../controllers/taskController';
 
 const taskRouter = new Router();
 

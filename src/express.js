@@ -6,22 +6,24 @@ import express from 'express';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 import session from 'express-session';
-//import https from 'https';
-import http from 'http';
+/*
+import https from 'https';
 import fs from 'fs';
 import path from 'path';
+*/
+import http from 'http';
 import socketIo from 'socket.io';
 import passport from 'passport';
-import uiRouter from './Routers/uiRouter';
+import uiRouter from './routers/uiRouter';
 import authRouter from './routers/authRouter';
-import apiRouter from './Routers/apiRouter';
-import taskRouter from './Routers/taskRouter';
+import apiRouter from './routers/apiRouter';
+import taskRouter from './routers/taskRouter';
 import { Routine, updateTagList, localsMiddleware } from './middlewares';
-
-dotenv.config();
 
 import './passport';
 import './db';
+
+dotenv.config();
 
 const app = express();
 /* HTTPS
@@ -33,7 +35,7 @@ const certOptions = {
 const httpsServer = https.createServer(certOptions, app);
 */
 const httpServer = http.createServer(app);
-const io = new socketIo(httpServer);
+const io = socketIo(httpServer);
 const MongoStore = connetMongo(session);
 
 app.set('view engine', 'pug');
@@ -50,13 +52,13 @@ app.use(
         saveUninitialized: false,
         store: new MongoStore({
             ttl: 60 * 60 * 1000,
-            mongooseConnection: mongoose.connection
+            mongooseConnection: mongoose.connection,
         }),
         cookie: {
             expires: false,
-            maxAge: 60 * 60 * 1000
-        }
-    })
+            maxAge: 60 * 60 * 1000,
+        },
+    }),
 );
 app.use(passport.initialize());
 

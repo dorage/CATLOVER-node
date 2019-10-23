@@ -3,8 +3,6 @@ import {
     getTodayPick,
     getPostDetail,
     getGirlDetail,
-    getGirlRank,
-    getPostRank,
     getTotalRank,
     getGirlLike,
     getPostLike,
@@ -12,8 +10,8 @@ import {
     postPostLike,
     getTags,
     getTagDetail,
-    getAPI
-} from '../Controllers/apiController';
+    getAPI,
+} from '../controllers/apiController';
 
 const apiRouter = new Router();
 

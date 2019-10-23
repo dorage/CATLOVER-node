@@ -1,9 +1,8 @@
-import routes from './routes';
-import Task from './Models/Task';
-import Tag from './Models/Tag';
-import TagList from './Models/TagList';
-import Post from './Models/Post';
-import Girl from './Models/Girl';
+import Task from './models/Task';
+import Tag from './models/Tag';
+import TagList from './models/TagList';
+import Post from './models/Post';
+import Girl from './models/Girl';
 import { Response } from './jsons';
 
 export const localsMiddleware = (req, res, next) => {
@@ -11,7 +10,7 @@ export const localsMiddleware = (req, res, next) => {
 };
 
 export const requiredLogin = (req, res, next) => {
-    const session = req.session;
+    const { session } = req;
     if (session.user) {
         next();
     } else {
@@ -20,7 +19,7 @@ export const requiredLogin = (req, res, next) => {
 };
 
 export const noRequiredLogin = (req, res, next) => {
-    const session = req.session;
+    const { session } = req;
     if (session.user) {
         res.redirect('/ui');
     } else {
@@ -28,7 +27,7 @@ export const noRequiredLogin = (req, res, next) => {
     }
 };
 
-export const DPrint = text => {
+export const DPrint = (text) => {
     if (process.env.NODE_ENV === 'development') console.log(text);
 };
 
@@ -65,7 +64,7 @@ export const updateTagList = async () => {
             for (let j = 0; j < girls.length; j++) {
                 const posts = await Post.find({
                     girl: girls[j],
-                    isImage: true
+                    isImage: true,
                 });
                 postsList = postsList.concat(posts);
             }
@@ -87,10 +86,10 @@ export const updateTagList = async () => {
 };
 
 // array 랜덤 셔플
-export const shuffleArray = array => {
-    var m = array.length,
-        t,
-        i;
+export const shuffleArray = (array) => {
+    let m = array.length;
+    let t;
+    let i;
 
     while (m) {
         // Pick a remaining element…

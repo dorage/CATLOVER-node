@@ -7,12 +7,12 @@ const postSchema = mongoose.Schema({
     images: [String],
     instagram: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Instagram'
+        ref: 'Instagram',
     },
     girl: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Gril'
-    }
+        ref: 'Gril',
+    },
 });
 
 const model = mongoose.model('Post', postSchema);

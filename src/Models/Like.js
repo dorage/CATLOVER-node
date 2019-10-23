@@ -3,23 +3,23 @@ import mongoose from 'mongoose';
 const postLikeSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     },
     post: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post'
-    }
+        ref: 'Post',
+    },
 });
 
 const girlLikeSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     },
     girl: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Girl'
-    }
+        ref: 'Girl',
+    },
 });
 
 export const PostLike = mongoose.model('PostLike', postLikeSchema);

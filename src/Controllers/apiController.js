@@ -1,9 +1,9 @@
-import Post from '../Models/Post';
-import Instagram from '../Models/Instagram';
-import Girl from '../Models/Girl';
-import User from '../Models/User';
-import Tag from '../Models/Tag';
-import TagList from '../Models/TagList';
+import Post from '../models/Post';
+import Instagram from '../models/Instagram';
+import Girl from '../models/Girl';
+import User from '../models/User';
+import Tag from '../models/Tag';
+import TagList from '../models/TagList';
 import { PostLike, GirlLike } from '../models/Like';
 import { DPrint, shuffleArray } from '../middlewares';
 

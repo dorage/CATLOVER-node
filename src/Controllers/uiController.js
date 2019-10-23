@@ -1,10 +1,10 @@
-import Admin from '../Models/Admin';
-import Girl from '../Models/Girl';
-import Task from '../Models/Task';
-import Post from '../Models/Post';
-import Tag from '../Models/Tag';
-import TagList from '../Models/TagList';
-import Instagram from '../Models/Instagram';
+import Admin from '../models/Admin';
+import Girl from '../models/Girl';
+import Task from '../models/Task';
+import Post from '../models/Post';
+import Tag from '../models/Tag';
+import TagList from '../models/TagList';
+import Instagram from '../models/Instagram';
 import { createTask } from './taskController';
 
 export const getLogin = async (req, res) => {

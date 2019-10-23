@@ -3,14 +3,14 @@ import mongoose from 'mongoose';
 const TagListSchema = mongoose.Schema({
     tag: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tag'
+        ref: 'Tag',
     },
     posts: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Post'
-        }
-    ]
+            ref: 'Post',
+        },
+    ],
 });
 
 const model = mongoose.model('TagList', TagListSchema);

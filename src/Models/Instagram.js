@@ -5,8 +5,8 @@ const instagramSchema = mongoose.Schema({
     profile: String,
     girl: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Girl'
-    }
+        ref: 'Girl',
+    },
 });
 
 const model = mongoose.model('Instagram', instagramSchema);

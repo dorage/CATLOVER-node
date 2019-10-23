@@ -7,9 +7,9 @@ const girlSchema = mongoose.Schema({
     tags: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Tag'
-        }
-    ]
+            ref: 'Tag',
+        },
+    ],
 });
 
 const model = mongoose.model('Girl', girlSchema);

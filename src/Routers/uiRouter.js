@@ -7,10 +7,9 @@ import {
     postTags,
     deleteTag,
     postGirlTags,
-    makeTagList,
     getLogin,
-    postLogin
-} from '../Controllers/uiController';
+    postLogin,
+} from '../controllers/uiController';
 import { requiredLogin, noRequiredLogin } from '../middlewares';
 
 const uiRouter = new Router();

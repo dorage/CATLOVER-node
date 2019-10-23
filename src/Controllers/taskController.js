@@ -1,16 +1,16 @@
-import Task from '../Models/Task';
-import Post from '../Models/Post';
+import Task from '../models/Task';
+import Post from '../models/Post';
 import { DPrint } from '../middlewares';
 import { taskState } from '../var';
 import { Response } from '../jsons';
 
 // 처음 girl 모델 생성시 task 모델 동시 생성
-export const createTask = instagram => {
+export const createTask = (instagram) => {
     DPrint('[createTask()] Start');
     const task = new Task({
         state: taskState.pending,
         instagram,
-        crawler: undefined
+        crawler: undefined,
     });
     task.save();
     DPrint('[createTask()] End');
@@ -24,7 +24,7 @@ export const getTask = async (req, res) => {
         const task = await Task.findOne({ state: taskState.pending })
             .sort({ id: -1 })
             .populate({
-                path: 'instagram'
+                path: 'instagram',
             });
         if (task === undefined) res.send(Response.noTask);
         // update task
@@ -45,7 +45,7 @@ export const postTask = async (req, res) => {
     try {
         const task = await Task.findOne({
             crawler,
-            state: taskState.crawling
+            state: taskState.crawling,
         }).populate({ path: 'instagram', populate: { path: 'girl' } });
         // task 가 없을시 실패 반환
         if (task === undefined) res.send(Response.forcedResetTask);
@@ -66,7 +66,7 @@ export const postTask = async (req, res) => {
                 isImage,
                 like: 0,
                 instagram: task.instagram,
-                girl: task.instagram.girl
+                girl: task.instagram.girl,
             });
             post.save();
         }

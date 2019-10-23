@@ -1,12 +1,12 @@
-import User from '../Models/User';
+import User from '../models/User';
 
-export const getGoogleCallback = async (req, res) => {
+export const getGoogleCallback = async (req) => {
     const io = req.app.get('io');
     const {
         user: {
             id,
-            name: { givenName: name }
-        }
+            name: { givenName: name },
+        },
     } = req;
     try {
         if ((await User.find({ id })).length === 0) {
@@ -20,11 +20,11 @@ export const getGoogleCallback = async (req, res) => {
     }
 };
 
-export const getFacebookCallback = (req, res) => {
+export const getFacebookCallback = (req) => {
     const io = req.app.get('io');
     const { givenName, familyName } = req.user.name;
     const user = {
-        name: `${givenName} ${familyName}`
+        name: `${givenName} ${familyName}`,
     };
     /*
     도큐먼트 생성 추가해야됨

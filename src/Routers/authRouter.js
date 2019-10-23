@@ -2,8 +2,8 @@ import { Router } from 'express';
 import passport from 'passport';
 import {
     getGoogleCallback,
-    getFacebookCallback
-} from '../Controllers/authController';
+    getFacebookCallback,
+} from '../controllers/authController';
 
 const googleAuth = passport.authenticate('google', { scope: ['profile'] });
 const facebookAuth = passport.authenticate('facebook');

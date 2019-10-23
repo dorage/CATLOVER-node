@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const tagSchema = mongoose.Schema({
-    name: String
+    name: String,
 });
 
 const model = mongoose.model('Tag', tagSchema);
