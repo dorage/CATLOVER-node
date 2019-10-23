@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://localhost:4000';
+const SERVER_URL = '3.220.98.25';
 
 export const googleConfig = {
     clientID:
