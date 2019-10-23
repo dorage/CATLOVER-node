@@ -85,5 +85,4 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-build/
-cert/
+build

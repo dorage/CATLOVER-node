@@ -15,7 +15,7 @@ export const postLogin = async (req, res, next) => {
     try {
         const admin = await Admin.findOne({ id });
         if (admin) {
-            const {session} = req;
+            const { session } = req;
             session.user = admin;
         }
         res.redirect('/ui');
@@ -50,13 +50,16 @@ export const getGirl = async (req, res) => {
         const totalPages = Math.ceil((await Girl.countDocuments()) / 20);
         let girls = null;
         // page 처리
-        if (Number(page) && Number(page) <= totalPages) {girls = await Girl.find({})
+        if (Number(page) && Number(page) <= totalPages) {
+            girls = await Girl.find({})
                 .sort({ _id: -1 })
                 .skip(20 * (Number(page) - 1))
-                .limit(20);}
-        else {girls = await Girl.find({})
+                .limit(20);
+        } else {
+            girls = await Girl.find({})
                 .sort({ _id: -1 })
-                .limit(20);}
+                .limit(20);
+        }
         for (let i = 0; i < girls.length; i++) {
             const instagram = await Instagram.find(
                 { girl: girls[i] },
@@ -81,11 +84,13 @@ export const postGirl = async (req, res) => {
         if (await Instagram.findOne({ id: instagramId })) throw 'same thing';
 
         let girl = await Girl.findOne({ name, nickname });
-        if (!girl) {girl = new Girl({
+        if (!girl) {
+            girl = new Girl({
                 name,
                 nickname,
-                like: 0
-            });}
+                like: 0,
+            });
+        }
 
         const instagram = new Instagram({ id: instagramId, girl });
 
