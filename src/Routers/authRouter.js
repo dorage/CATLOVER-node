@@ -1,5 +1,5 @@
-import { Router } from './node_modules/express';
-import passport from './node_modules/passport';
+import { Router } from 'express';
+import passport from 'passport';
 import {
     getGoogleCallback,
     getFacebookCallback,

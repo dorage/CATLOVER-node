@@ -1,4 +1,4 @@
-import { Router } from './node_modules/express';
+import { Router } from 'express';
 import {
     getTask,
     postTask,
