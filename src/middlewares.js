@@ -1,8 +1,8 @@
-import Task from './models/Task';
-import Tag from './models/Tag';
-import TagList from './models/TagList';
-import Post from './models/Post';
-import Girl from './models/Girl';
+import Task from './Models/Task';
+import Tag from './Models/Tag';
+import TagList from './Models/TagList';
+import Post from './Models/Post';
+import Girl from './Models/Girl';
 import { Response } from './jsons';
 
 export const localsMiddleware = (req, res, next) => {

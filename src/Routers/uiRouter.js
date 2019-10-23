@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router } from './node_modules/express';
 import {
     getTask,
     getGirl,
@@ -9,7 +9,7 @@ import {
     postGirlTags,
     getLogin,
     postLogin,
-} from '../controllers/uiController';
+} from '../Controllers/uiController';
 import { requiredLogin, noRequiredLogin } from '../middlewares';
 
 const uiRouter = new Router();

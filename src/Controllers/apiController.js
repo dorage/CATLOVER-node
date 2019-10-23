@@ -1,10 +1,10 @@
-import Post from '../models/Post';
-import Instagram from '../models/Instagram';
-import Girl from '../models/Girl';
-import User from '../models/User';
-import Tag from '../models/Tag';
-import TagList from '../models/TagList';
-import { PostLike, GirlLike } from '../models/Like';
+import Post from '../Models/Post';
+import Instagram from '../Models/Instagram';
+import Girl from '../Models/Girl';
+import User from '../Models/User';
+import Tag from '../Models/Tag';
+import TagList from '../Models/TagList';
+import { PostLike, GirlLike } from '../Models/Like';
 import { DPrint, shuffleArray } from '../middlewares';
 
 export const getAPI = (req, res) => {
@@ -15,7 +15,7 @@ export const getTodayPick = async (req, res) => {
     try {
         let todayPick = await Post.find(
             { isImage: true },
-            { _id: true, images: true }
+            { _id: true, images: true },
         )
             .sort({ id: -1 })
             .limit(20);
@@ -112,7 +112,7 @@ export const getPostLike = async (req, res) => {
         if (postLike) {
             res.send({
                 isLike: true,
-                like: post.like
+                like: post.like,
             });
         } else {
             res.send({ isLike: false, like: post.like });
@@ -137,7 +137,7 @@ export const getGirlLike = async (req, res) => {
         if (girlLike) {
             res.send({
                 isLike: true,
-                like: girl.like
+                like: girl.like,
             });
         } else {
             res.send({ isLike: false, like: girl.like });
@@ -155,7 +155,7 @@ export const postPostLike = async (req, res, next) => {
     try {
         const user = await User.findOne({ id: userId });
         const post = await Post.findOne({ _id: id });
-        var postLike = await PostLike.findOne({ user, post });
+        let postLike = await PostLike.findOne({ user, post });
         if (postLike) {
             await PostLike.deleteOne({ user, post });
             post.like--;
@@ -179,7 +179,7 @@ export const postGirlLike = async (req, res, next) => {
     try {
         const user = await User.findOne({ name, email });
         const girl = await Girl.findOne({ _id: id });
-        var girlLike = await GirlLike.findOne({ name });
+        let girlLike = await GirlLike.findOne({ name });
         if (girlLike) {
             await GirlLike.deleteOne({ user, girl });
             girl.like--;

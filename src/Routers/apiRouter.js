@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router } from './node_modules/express';
 import {
     getTodayPick,
     getPostDetail,
@@ -11,7 +11,7 @@ import {
     getTags,
     getTagDetail,
     getAPI,
-} from '../controllers/apiController';
+} from '../Controllers/apiController';
 
 const apiRouter = new Router();
 

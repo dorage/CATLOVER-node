@@ -1,5 +1,5 @@
-import Task from '../models/Task';
-import Post from '../models/Post';
+import Task from '../Models/Task';
+import Post from '../Models/Post';
 import { DPrint } from '../middlewares';
 import { taskState } from '../var';
 import { Response } from '../jsons';

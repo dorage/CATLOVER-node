@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router } from './node_modules/express';
 import {
     getTask,
     postTask,
     resetTask,
     deleteTask,
-} from '../controllers/taskController';
+} from '../Controllers/taskController';
 
 const taskRouter = new Router();
 

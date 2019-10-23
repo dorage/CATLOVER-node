@@ -14,10 +14,10 @@ import path from 'path';
 import http from 'http';
 import socketIo from 'socket.io';
 import passport from 'passport';
-import authRouter from './routers/authRouter';
-import uiRouter from './routers/uiRouter';
-import apiRouter from './routers/apiRouter';
-import taskRouter from './routers/taskRouter';
+import authRouter from './Routers/authRouter';
+import uiRouter from './Routers/uiRouter';
+import apiRouter from './Routers/apiRouter';
+import taskRouter from './Routers/taskRouter';
 import { Routine, updateTagList, localsMiddleware } from './middlewares';
 
 import './passport';
