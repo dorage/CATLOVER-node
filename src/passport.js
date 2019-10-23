@@ -8,6 +8,5 @@ const callback = (accessToken, refreshToken, profile, cb) => cb(null, profile);
 passport.serializeUser((user, cb) => cb(null, user));
 passport.deserializeUser((obj, cb) => cb(null, obj));
 
-//passport.use(new TwitterStrategy(twitterConfig, callback));
 passport.use(new GoogleStrategy(googleConfig, callback));
 passport.use(new FacebookStrategy(facebookConfig, callback));

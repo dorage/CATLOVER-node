@@ -4,7 +4,7 @@ import Girl from '../Models/Girl';
 import User from '../Models/User';
 import Tag from '../Models/Tag';
 import TagList from '../Models/TagList';
-import { verifyIdToken } from './authController';
+import { PostLike, GirlLike } from '../models/Like';
 import { DPrint, shuffleArray } from '../middlewares';
 
 export const getAPI = (req, res) => {
@@ -99,19 +99,19 @@ export const getTotalRank = async (req, res) => {
 };
 
 export const getPostLike = async (req, res) => {
-    const { tokenId } = req.query;
+    const { userId } = req.query;
     const { id } = req.params;
     try {
         const post = await Post.findById(id);
-        if (!tokenId) {
+        if (!userId) {
             res.send({ isLike: false, like: post.like });
             return;
         }
-        const { name, email } = await verifyIdToken(tokenId);
-        const user = await User.findOne({ name, email });
-        if (user.posts) {
+        const user = await User.findOne({ id: userId });
+        const postLike = await PostLike.findOne({ user, post });
+        if (postLike) {
             res.send({
-                isLike: user.posts.includes(id),
+                isLike: true,
                 like: post.like
             });
         } else {
@@ -124,20 +124,19 @@ export const getPostLike = async (req, res) => {
 };
 
 export const getGirlLike = async (req, res) => {
-    const { tokenId } = req.query;
+    const { userId } = req.query;
     const { id } = req.params;
     try {
         const girl = await Girl.findById(id);
-        if (!tokenId) {
+        if (!userId) {
             res.send({ isLike: false, like: girl.like });
             return;
         }
-
-        const { name, email } = await verifyIdToken(tokenId);
-        const user = await User.findOne({ name, email });
-        if (user.girls) {
+        const user = await User.findOne({ id: userId });
+        const girlLike = await GirlLike.findOne({ user, girl });
+        if (girlLike) {
             res.send({
-                isLike: user.girls.includes(id),
+                isLike: true,
                 like: girl.like
             });
         } else {
@@ -150,76 +149,48 @@ export const getGirlLike = async (req, res) => {
 };
 
 export const postPostLike = async (req, res, next) => {
-    const { tokenId } = req.query;
+    const { userId } = req.query;
     const { id } = req.params;
 
-    let originalLike = -1;
-
     try {
-        const { name, email } = await verifyIdToken(tokenId);
-        const user = await User.findOne({ name, email });
+        const user = await User.findOne({ id: userId });
         const post = await Post.findOne({ _id: id });
-        originalLike = post.like;
-
-        if (user.posts && user.posts.includes(post._id)) {
-            DPrint('pull');
+        var postLike = await PostLike.findOne({ user, post });
+        if (postLike) {
+            await PostLike.deleteOne({ user, post });
             post.like--;
             post.save();
-            user.posts.pull(post);
-            user.save();
         } else {
-            DPrint('push');
+            postLike = new PostLike({ user, post });
             post.like++;
             post.save();
-            user.posts.push(post);
-            user.save();
+            postLike.save();
         }
         next();
     } catch (e) {
-        // like가 변경되었을때 원래대로 변경
-        if (originalLike !== -1) {
-            const post = await Post.findOne({ _id: id });
-            if (originalLike !== post.like) {
-                post.like = originalLike;
-                post.save();
-            }
-        }
         console.log(e);
         res.sendStatus(412);
     }
 };
 export const postGirlLike = async (req, res, next) => {
-    const { tokenId } = req.query;
+    const { userId } = req.query;
     const { id } = req.params;
 
-    let originalLike = -1;
     try {
-        const { name, email } = await verifyIdToken(tokenId);
         const user = await User.findOne({ name, email });
         const girl = await Girl.findOne({ _id: id });
-        originalLike = girl.like;
-
-        if (user.girls && user.girls.includes(girl._id)) {
+        var girlLike = await GirlLike.findOne({ name });
+        if (girlLike) {
+            await GirlLike.deleteOne({ user, girl });
             girl.like--;
             girl.save();
-            user.girls.pull(girl);
-            user.save();
         } else {
+            girlLike = new GirlLike({ user, girl });
             girl.like++;
             girl.save();
-            user.girls.push(girl);
-            user.save();
         }
         next();
     } catch (e) {
-        // like가 변경되었을때 원래대로 변경
-        if (originalLike !== -1) {
-            const girl = await Girl.findOne({ _id: id });
-            if (originalLike !== girl.like) {
-                girl.like = originalLike;
-                girl.save();
-            }
-        }
         console.log(e);
         res.sendStatus(412);
     }

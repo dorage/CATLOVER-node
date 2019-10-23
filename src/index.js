@@ -1,12 +1,9 @@
-import dotenv from 'dotenv';
-import httpsServer from './express';
+import Server from './express';
 
-dotenv.config();
-
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 80;
 
 const handleListen = () => {
     console.log(`Listening On : http://localhost:${port}`);
 };
 
-httpsServer.listen(port, handleListen);
+Server.listen(port, handleListen);
