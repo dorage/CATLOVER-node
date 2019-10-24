@@ -52,13 +52,13 @@ app.use(
         saveUninitialized: false,
         store: new MongoStore({
             ttl: 60 * 60 * 1000,
-            mongooseConnection: mongoose.connection,
+            mongooseConnection: mongoose.connection
         }),
         cookie: {
             expires: false,
-            maxAge: 60 * 60 * 1000,
-        },
-    }),
+            maxAge: 60 * 60 * 1000
+        }
+    })
 );
 app.use(passport.initialize());
 
