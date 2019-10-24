@@ -1,7 +1,7 @@
 import Task from '../Models/Task';
 import Post from '../Models/Post';
 import { DPrint } from '../middlewares';
-import { taskState } from '../var';
+import { taskState } from '../vars';
 import { Response } from '../jsons';
 
 // 처음 girl 모델 생성시 task 모델 동시 생성
