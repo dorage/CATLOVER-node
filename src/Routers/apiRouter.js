@@ -12,6 +12,7 @@ import {
     getTagDetail,
     getAPI,
 } from '../Controllers/apiController';
+import { requiredId } from '../middlewares';
 
 const apiRouter = new Router();
 
@@ -25,8 +26,8 @@ apiRouter.get('/post/:id', getPostDetail);
 // like
 apiRouter.get('/girl/:id/like', getGirlLike);
 apiRouter.get('/post/:id/like', getPostLike);
-apiRouter.post('/girl/:id/like', postGirlLike, getGirlLike);
-apiRouter.post('/post/:id/like', postPostLike, getPostLike);
+apiRouter.post('/girl/:id/like', requiredId, postGirlLike, getGirlLike);
+apiRouter.post('/post/:id/like', requiredId, postPostLike, getPostLike);
 // ranks
 apiRouter.get('/total/rank', getTotalRank);
 // tags

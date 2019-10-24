@@ -103,8 +103,9 @@ export const getPostLike = async (req, res) => {
     const { id } = req.params;
     try {
         const post = await Post.findById(id);
+        const like = await Post.count({ post });
         if (!userId) {
-            res.send({ isLike: false, like: post.like });
+            res.send({ isLike: false, like });
             return;
         }
         const user = await User.findOne({ id: userId });
@@ -112,10 +113,10 @@ export const getPostLike = async (req, res) => {
         if (postLike) {
             res.send({
                 isLike: true,
-                like: post.like,
+                like,
             });
         } else {
-            res.send({ isLike: false, like: post.like });
+            res.send({ isLike: false, like });
         }
     } catch (e) {
         console.log(e);
@@ -128,8 +129,9 @@ export const getGirlLike = async (req, res) => {
     const { id } = req.params;
     try {
         const girl = await Girl.findById(id);
+        const like = await GirlLike.count({ girl });
         if (!userId) {
-            res.send({ isLike: false, like: girl.like });
+            res.send({ isLike: false, like });
             return;
         }
         const user = await User.findOne({ id: userId });
@@ -137,10 +139,10 @@ export const getGirlLike = async (req, res) => {
         if (girlLike) {
             res.send({
                 isLike: true,
-                like: girl.like,
+                like,
             });
         } else {
-            res.send({ isLike: false, like: girl.like });
+            res.send({ isLike: false, like });
         }
     } catch (e) {
         console.log(e);
@@ -158,12 +160,8 @@ export const postPostLike = async (req, res, next) => {
         let postLike = await PostLike.findOne({ user, post });
         if (postLike) {
             await PostLike.deleteOne({ user, post });
-            post.like--;
-            post.save();
         } else {
             postLike = new PostLike({ user, post });
-            post.like++;
-            post.save();
             postLike.save();
         }
         next();
@@ -182,12 +180,9 @@ export const postGirlLike = async (req, res, next) => {
         let girlLike = await GirlLike.findOne({ name });
         if (girlLike) {
             await GirlLike.deleteOne({ user, girl });
-            girl.like--;
-            girl.save();
         } else {
             girlLike = new GirlLike({ user, girl });
-            girl.like++;
-            girl.save();
+            girlLike.save();
         }
         next();
     } catch (e) {

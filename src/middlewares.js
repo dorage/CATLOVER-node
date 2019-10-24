@@ -103,3 +103,12 @@ export const shuffleArray = (array) => {
 
     return array;
 };
+
+export const requiredId = (req, res, next) => {
+    const { userId } = req.query;
+
+    if (userId) {
+        next();
+    }
+    res.send(404);
+};

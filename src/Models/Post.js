@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 const postSchema = mongoose.Schema({
     isImage: Boolean,
     link: String,
-    like: Number,
     images: [String],
     instagram: {
         type: mongoose.Schema.Types.ObjectId,
