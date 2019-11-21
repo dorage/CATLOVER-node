@@ -50,5 +50,6 @@ export const getCookieSignIn = async (req, res) => {
 };
 
 export const getCookieSignOut = (req, res) => {
-    req.session.userId;
+    delete req.session.userId;
+    delete req.session.userName;
 };
