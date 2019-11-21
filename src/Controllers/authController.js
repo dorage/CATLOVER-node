@@ -4,19 +4,21 @@ export const getGoogleCallback = async req => {
     const io = req.app.get('io');
     const {
         user: {
-            id,
+            id: googleId,
             name: { givenName: name }
-        }
+        },
+        session: { socketId }
     } = req;
     try {
+        let user = await User.find({ name, googleId });
         // 유저 생성
-        if ((await User.find({ name, googleId: id })).length === 0) {
-            const userModel = new User({ name, googleId: id });
-            userModel.save();
+        if (user.length === 0) {
+            user = new User({ name, googleId, socketId });
+            user.save();
+        } else {
+            user.socketId = socketId;
+            user.save();
         }
-        // session 에 저장
-        const user = await User.find({ name, googleId: id });
-        req.session.userId = user._id;
         // 클라이언트 전달
         io.in(req.session.socketId).emit('google', { name });
     } catch (e) {
@@ -35,9 +37,13 @@ export const getFacebookCallback = req => {
     io.in(req.session.socketId).emit('facebook', user);
 };
 
-export const getCookieSignIn = (req, res) => {
-    const { userId, socketId } = req.session;
-    res.send({ userId, socketId });
+export const getCookieSignIn = async (req, res) => {
+    const { socketId } = req.query;
+    req.session.socketId = socketId;
+    const io = req.app.get('io');
+    const name = 'kang';
+    io.in(socketId).emit('google', { name });
+    res.send({ socketId });
 };
 
 export const getCookieSignOut = (req, res) => {
