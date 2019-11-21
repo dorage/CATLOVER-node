@@ -78,7 +78,6 @@ export const getTotalRank = async (req, res) => {
             like: await PostLike.count(elem._id),
             link: elem.link,
         }));
-        const postResults = await Promise.all(postRank);
 
         const girl = await Girl.find({})
             .sort({ like: -1 })
@@ -88,9 +87,8 @@ export const getTotalRank = async (req, res) => {
             like: await GirlLike.count(elem._id),
             name: elem.name,
         }));
-        const girlResults = await Promise.all(girlRank);
 
-        res.send({ results: { post: postResults, girl: girlResults } });
+        res.send({ results: { post: postRank, girl: girlRank } });
     } catch (e) {
         console.log(e);
         res.send(Response.error(e));
