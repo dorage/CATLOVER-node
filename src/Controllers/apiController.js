@@ -74,7 +74,6 @@ export const getTotalRank = async (req, res) => {
             { $group: { _id: '$post', like: { $sum: 1 } } },
             { $sort: { count: -1 } }
         ]).limit(10);
-
         const postsPromise = postRank.map(async elem => {
             const post = await Post.findById(elem._id, { link: true });
             return { _id: post._id, link: post.link, like: elem.like };
@@ -85,7 +84,6 @@ export const getTotalRank = async (req, res) => {
             { $group: { _id: '$girl', like: { $sum: 1 } } },
             { $sort: { count: -1 } }
         ]).limit(10);
-
         const girlsPromise = girlRank.map(async elem => {
             const girl = await Girl.findById(elem._id, { name: true });
             return { _id: girl._id, name: name, like: elem.like };

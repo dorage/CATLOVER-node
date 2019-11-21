@@ -1,37 +1,45 @@
 import User from '../Models/User';
 
-export const getGoogleCallback = async (req) => {
+export const getGoogleCallback = async req => {
     const io = req.app.get('io');
     const {
         user: {
             id,
-            name: { givenName: name },
-        },
+            name: { givenName: name }
+        }
     } = req;
     try {
-        if ((await User.find({ id })).length === 0) {
-            const userModel = new User({ id, name });
+        // 유저 생성
+        if ((await User.find({ name, googleId: id })).length === 0) {
+            const userModel = new User({ name, googleId: id });
             userModel.save();
         }
-        io.in(req.session.socketId).emit('google', { id, name });
+        // session 에 저장
+        const user = await User.find({ name, googleId: id });
+        req.session.userId = user._id;
+        // 클라이언트 전달
+        io.in(req.session.socketId).emit('google', { name });
     } catch (e) {
         console.log(e);
         io.in(req.session.socketId).emit('google', {});
     }
 };
 
-export const getFacebookCallback = (req) => {
+export const getFacebookCallback = req => {
     const io = req.app.get('io');
     const { givenName, familyName } = req.user.name;
     const user = {
-        name: `${givenName} ${familyName}`,
+        name: `${givenName} ${familyName}`
     };
-    /*
-    도큐먼트 생성 추가해야됨
-    */
+    // 유저 생성
     io.in(req.session.socketId).emit('facebook', user);
 };
 
-export const getCookieSignIn = (req, res) => {};
+export const getCookieSignIn = (req, res) => {
+    const { userId } = req.session;
+    res.send({ userId });
+};
 
-export const getCookieSignOut = (req, res) => {};
+export const getCookieSignOut = (req, res) => {
+    req.session.userId;
+};

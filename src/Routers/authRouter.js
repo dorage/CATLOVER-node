@@ -4,7 +4,7 @@ import {
     getGoogleCallback,
     getFacebookCallback,
     getCookieSignIn,
-    getCookieSignOut,
+    getCookieSignOut
 } from '../Controllers/authController';
 
 const googleAuth = passport.authenticate('google', { scope: ['profile'] });

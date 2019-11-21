@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 const userSchema = mongoose.Schema({
-    id: String,
-    name: String,
+    googleId: String,
+    name: String
 });
 
 const model = mongoose.model('User', userSchema);
