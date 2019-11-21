@@ -46,7 +46,7 @@ app.set('io', io);
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: '*', credentials: true }));
 app.use(
     session({
         secret: 'catlover-session',
@@ -54,13 +54,13 @@ app.use(
         saveUninitialized: false,
         store: new MongoStore({
             ttl: hour,
-            mongooseConnection: mongoose.connection,
+            mongooseConnection: mongoose.connection
         }),
         cookie: {
             expires: new Date(Date.now() + hour),
-            maxAge: hour,
-        },
-    }),
+            maxAge: hour
+        }
+    })
 );
 app.use(passport.initialize());
 
