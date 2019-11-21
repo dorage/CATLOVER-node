@@ -6,8 +6,7 @@ export const getGoogleCallback = async req => {
         user: {
             id: googleId,
             name: { givenName: name }
-        },
-        session: { socketId }
+        }
     } = req;
     try {
         let user = await User.find({ name, googleId });
@@ -20,10 +19,13 @@ export const getGoogleCallback = async req => {
             user.save();
         }
         // 클라이언트 전달
-        io.in(socketId).emit('google', { name, id: user._id });
+        io.in(req.session.socketId).emit('google', {
+            name: user.name,
+            id: user._id
+        });
     } catch (e) {
         console.log(e);
-        io.in(socketId).emit('google', {});
+        io.in(req.session.socketId).emit('google', { error: e });
     }
 };
 
