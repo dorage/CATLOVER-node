@@ -9,7 +9,7 @@ export const getGoogleCallback = async req => {
         }
     } = req;
     try {
-        let user = await User.find({ name, googleId });
+        let user = await User.findOne({ name, googleId });
         // 유저 생성 혹은 소켓아이디 변경
         if (user.length === 0) {
             user = new User({ name, googleId, socketId });
