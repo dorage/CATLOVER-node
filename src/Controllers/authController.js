@@ -20,7 +20,7 @@ export const getGoogleCallback = async req => {
             user.save();
         }
         // 클라이언트 전달
-        io.in(socketId).emit('google', { name });
+        io.in(socketId).emit('google', { name, id: user._id });
     } catch (e) {
         console.log(e);
         io.in(socketId).emit('google', {});

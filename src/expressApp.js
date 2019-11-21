@@ -48,8 +48,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
     cors({
-        origin: ['http://localhost:3000', 'http://www.catloverlife.com/'],
-        credentials: true
+        origin: '*'
     })
 );
 app.use(
