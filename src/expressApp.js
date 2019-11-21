@@ -46,7 +46,12 @@ app.set('io', io);
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors({ origin: '*', credentials: true }));
+app.use(
+    cors({
+        origin: ['http://localhost:3000', 'http://www.catloverlife.com/'],
+        credentials: true
+    })
+);
 app.use(
     session({
         secret: 'catlover-session',
