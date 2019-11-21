@@ -31,3 +31,7 @@ export const getFacebookCallback = (req) => {
     */
     io.in(req.session.socketId).emit('facebook', user);
 };
+
+export const getCookieSignIn = (req, res) => {};
+
+export const getCookieSignOut = (req, res) => {};

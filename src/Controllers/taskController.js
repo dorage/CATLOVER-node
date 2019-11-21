@@ -5,14 +5,18 @@ import { taskState } from '../vars';
 import { Response } from '../jsons';
 
 // 처음 girl 모델 생성시 task 모델 동시 생성
-export const createTask = (instagram) => {
+export const createTask = async (instagram) => {
     DPrint('[createTask()] Start');
-    const task = new Task({
-        state: taskState.pending,
-        instagram,
-        crawler: undefined,
-    });
-    task.save();
+    try {
+        const task = new Task({
+            state: taskState.pending,
+            instagram,
+            crawler: undefined,
+        });
+        task.save();
+    } catch (e) {
+        console.log(e);
+    }
     DPrint('[createTask()] End');
 };
 

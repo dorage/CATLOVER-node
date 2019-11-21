@@ -8,7 +8,7 @@ Express, NodeJS, Mongoose, PUG TemplateEngine 사용
 # 링크
 
 -   CATLOVER 페이지 - [[링크]](http://www.catloverlife.com/)
--   CATLOVER API 페이지 - [[링크]](http://3.220.98.25:8383/ui)
+-   CATLOVER API 페이지 - [[링크]](https://api.catloverlife.com)
 -   CATLOVER-REACT 깃허브 - [[링크]](https://github.com/dorage/CATLOVER-react)
 
 # 페이지

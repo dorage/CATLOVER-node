@@ -9,5 +9,5 @@ export const googleConfig = {
 export const facebookConfig = {
     clientID: '2499202380362030',
     clientSecret: 'bc10db4ad2191f09a3107489b00a75e4',
-    callbackURL: '/facebook/callback',
+    callbackURL: 'https://api.catloverlife.com/facebook/callback',
 };

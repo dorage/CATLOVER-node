@@ -60,7 +60,7 @@ export const getGirl = async (req, res) => {
                 .sort({ _id: -1 })
                 .limit(20);
         }
-        for (let i = 0; i < girls.length; i++) {
+        for (let i = 0; i < girls.length; i += 1) {
             const instagram = await Instagram.find(
                 { girl: girls[i] },
                 { id: true, profile: true },

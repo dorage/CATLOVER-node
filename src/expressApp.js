@@ -38,6 +38,8 @@ const httpServer = http.createServer(app);
 const io = socketIo(httpServer);
 const MongoStore = connetMongo(session);
 
+const hour = 60 * 60 * 1000;
+
 app.set('view engine', 'pug');
 app.set('io', io);
 
@@ -51,14 +53,14 @@ app.use(
         resave: true,
         saveUninitialized: false,
         store: new MongoStore({
-            ttl: 60 * 60 * 1000,
-            mongooseConnection: mongoose.connection
+            ttl: hour,
+            mongooseConnection: mongoose.connection,
         }),
         cookie: {
-            expires: false,
-            maxAge: 60 * 60 * 1000
-        }
-    })
+            expires: new Date(Date.now() + hour),
+            maxAge: hour,
+        },
+    }),
 );
 app.use(passport.initialize());
 

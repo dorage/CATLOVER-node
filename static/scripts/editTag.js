@@ -6,6 +6,16 @@ function deleteTag(id) {
         console.log(post);
         location.reload();
     };
-    xhttp.open('DELETE', `http://3.220.98.25:8383/ui/tags?id=${id}`, true);
+    xhttp.open('DELETE', `https://api.catloverlife.com/ui/tags?id=${id}`, true);
+    xhttp.send();
+}
+
+function deleteTagOnLocal(id) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(post) {
+        console.log(post);
+        location.reload();
+    };
+    xhttp.open('DELETE', `http://localhost:8383/ui/tags?id=${id}`, true);
     xhttp.send();
 }

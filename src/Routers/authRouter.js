@@ -3,6 +3,8 @@ import passport from 'passport';
 import {
     getGoogleCallback,
     getFacebookCallback,
+    getCookieSignIn,
+    getCookieSignOut,
 } from '../Controllers/authController';
 
 const googleAuth = passport.authenticate('google', { scope: ['profile'] });
@@ -20,5 +22,8 @@ router.get('/facebook', addSocketIdtoSession, facebookAuth);
 
 router.get('/google/callback', googleAuth, getGoogleCallback);
 router.get('/facebook/callback', facebookAuth, getFacebookCallback);
+
+router.get('/cookie-signin', getCookieSignIn);
+router.get('/cookie-signout', getCookieSignOut);
 
 export default router;
