@@ -11,7 +11,7 @@ export const getGoogleCallback = async req => {
     } = req;
     try {
         let user = await User.find({ name, googleId });
-        // 유저 생성
+        // 유저 생성 혹은 소켓아이디 변경
         if (user.length === 0) {
             user = new User({ name, googleId, socketId });
             user.save();
@@ -39,11 +39,14 @@ export const getFacebookCallback = req => {
 
 export const getCookieSignIn = async (req, res) => {
     const { socketId } = req.query;
-    req.session.socketId = socketId;
-    const io = req.app.get('io');
-    const name = 'kang';
-    io.in(socketId).emit('google', { name });
-    res.send({ socketId });
+    const { userId } = req.session;
+    if (userId) {
+        res.send({ name });
+    }
+    const user = await User.findOne({ socketId }, { name: true });
+    req.session.userId = user._id;
+    req.session.userName = user.name;
+    res.send(user);
 };
 
 export const getCookieSignOut = (req, res) => {
