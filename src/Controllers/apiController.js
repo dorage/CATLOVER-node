@@ -102,7 +102,7 @@ export const getPostLike = async (req, res) => {
     const { id } = req.params;
     try {
         const post = await Post.findById(id);
-        const like = await PostLike.count({ post });
+        const like = await PostLike.countDocuments({ post });
         if (!userId) {
             res.send({ isLike: false, like });
             return;
@@ -128,7 +128,7 @@ export const getGirlLike = async (req, res) => {
     const { id } = req.params;
     try {
         const girl = await Girl.findById(id);
-        const like = await GirlLike.count({ girl });
+        const like = await GirlLike.countDocuments({ girl });
         if (!userId) {
             res.send({ isLike: false, like });
             return;
@@ -155,7 +155,7 @@ export const postPostLike = async (req, res, next) => {
 
     try {
         const user = await User.findById(userId);
-        const post = await Post.findOne({ _id: id });
+        const post = await Post.findById(id);
         let postLike = await PostLike.findOne({ user, post });
         if (postLike) {
             await PostLike.deleteOne({ user, post });
@@ -175,8 +175,8 @@ export const postGirlLike = async (req, res, next) => {
 
     try {
         const user = await User.findById(userId);
-        const girl = await Girl.findOne({ _id: id });
-        let girlLike = await GirlLike.findOne({ name });
+        const girl = await Girl.findById(id);
+        let girlLike = await GirlLike.findOne({ user, girl });
         if (girlLike) {
             await GirlLike.deleteOne({ user, girl });
         } else {

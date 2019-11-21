@@ -27,7 +27,7 @@ export const noRequiredLogin = (req, res, next) => {
     }
 };
 
-export const DPrint = (text) => {
+export const DPrint = text => {
     if (process.env.NODE_ENV === 'development') console.log(text);
 };
 
@@ -64,7 +64,7 @@ export const updateTagList = async () => {
             for (let j = 0; j < girls.length; j++) {
                 const posts = await Post.find({
                     girl: girls[j],
-                    isImage: true,
+                    isImage: true
                 });
                 postsList = postsList.concat(posts);
             }
@@ -86,7 +86,7 @@ export const updateTagList = async () => {
 };
 
 // array 랜덤 셔플
-export const shuffleArray = (array) => {
+export const shuffleArray = array => {
     let m = array.length;
     let t;
     let i;
@@ -109,6 +109,7 @@ export const requiredId = (req, res, next) => {
 
     if (userId) {
         next();
+    } else {
+        res.send('');
     }
-    res.send(404);
 };
