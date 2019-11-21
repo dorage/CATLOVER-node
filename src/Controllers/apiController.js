@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import Post from '../Models/Post';
 import Instagram from '../Models/Instagram';
 import Girl from '../Models/Girl';
@@ -15,7 +16,7 @@ export const getTodayPick = async (req, res) => {
     try {
         let todayPick = await Post.find(
             { isImage: true },
-            { _id: true, images: true },
+            { _id: true, images: true }
         )
             .sort({ id: -1 })
             .limit(20);
@@ -69,26 +70,29 @@ export const getGirlDetail = async (req, res) => {
 
 export const getTotalRank = async (req, res) => {
     try {
-        const post = await Post.find({ isImage: true })
-            .sort({ like: -1 })
-            .limit(10);
+        const postRank = await PostLike.aggregate([
+            { $group: { _id: '$post', like: { $sum: 1 } } },
+            { $sort: { count: -1 } }
+        ]).limit(10);
 
-        const postRank = post.map(async elem => ({
-            _id: elem._id,
-            like: await PostLike.count(elem._id),
-            link: elem.link,
-        }));
+        const postsPromise = postRank.map(async elem => {
+            const post = await Post.findById(elem._id, { link: true });
+            return { _id: post._id, link: post.link, like: elem.like };
+        });
+        const posts = await Promise.all(postsPromise);
 
-        const girl = await Girl.find({})
-            .sort({ like: -1 })
-            .limit(10);
-        const girlRank = girl.map(async elem => ({
-            _id: elem._id,
-            like: await GirlLike.count(elem._id),
-            name: elem.name,
-        }));
+        const girlRank = await GirlLike.aggregate([
+            { $group: { _id: '$girl', like: { $sum: 1 } } },
+            { $sort: { count: -1 } }
+        ]).limit(10);
 
-        res.send({ results: { post: postRank, girl: girlRank } });
+        const girlsPromise = girlRank.map(async elem => {
+            const girl = await Girl.findById(elem._id, { name: true });
+            return { _id: girl._id, name: name, like: elem.like };
+        });
+        const girls = await Promise.all(girlsPromise);
+
+        res.send({ results: { posts, girls } });
     } catch (e) {
         console.log(e);
         res.send(Response.error(e));
@@ -110,7 +114,7 @@ export const getPostLike = async (req, res) => {
         if (postLike) {
             res.send({
                 isLike: true,
-                like,
+                like
             });
         } else {
             res.send({ isLike: false, like });
@@ -136,7 +140,7 @@ export const getGirlLike = async (req, res) => {
         if (girlLike) {
             res.send({
                 isLike: true,
-                like,
+                like
             });
         } else {
             res.send({ isLike: false, like });
