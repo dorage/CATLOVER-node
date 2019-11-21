@@ -72,26 +72,25 @@ export const getTotalRank = async (req, res) => {
         const post = await Post.find({ isImage: true })
             .sort({ like: -1 })
             .limit(10);
-        /*
+
         const postRank = post.map(async elem => ({
             _id: elem._id,
-            like: await postLikeCount(elem._id),
-            link: elem.link
+            like: await PostLike.count(elem._id),
+            link: elem.link,
         }));
         const postResults = await Promise.all(postRank);
-        */
+
         const girl = await Girl.find({})
             .sort({ like: -1 })
             .limit(10);
-        /*
         const girlRank = girl.map(async elem => ({
             _id: elem._id,
-            like: await girlLikeCount(elem._id),
-            name: elem.name
+            like: await GirlLike.count(elem._id),
+            name: elem.name,
         }));
         const girlResults = await Promise.all(girlRank);
-        */
-        res.send({ results: { post, girl } });
+
+        res.send({ results: { post: postResults, girl: girlResults } });
     } catch (e) {
         console.log(e);
         res.send(Response.error(e));
@@ -103,7 +102,7 @@ export const getPostLike = async (req, res) => {
     const { id } = req.params;
     try {
         const post = await Post.findById(id);
-        const like = await Post.count({ post });
+        const like = await PostLike.count({ post });
         if (!userId) {
             res.send({ isLike: false, like });
             return;
