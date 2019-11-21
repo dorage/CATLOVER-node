@@ -11,11 +11,8 @@ export const getGoogleCallback = async req => {
     try {
         let user = await User.findOne({ name, googleId });
         // 유저 생성 혹은 소켓아이디 변경
-        if (user.length === undefined) {
+        if (user === undefined) {
             user = new User({ name, googleId, socketId });
-            user.save();
-        } else {
-            user.socketId = socketId;
             user.save();
         }
         // 클라이언트 전달
