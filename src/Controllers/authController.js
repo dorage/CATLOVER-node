@@ -36,8 +36,8 @@ export const getFacebookCallback = req => {
 };
 
 export const getCookieSignIn = (req, res) => {
-    const { userId } = req.session;
-    res.send({ userId });
+    const { userId, socketId } = req.session;
+    res.send({ userId, socketId });
 };
 
 export const getCookieSignOut = (req, res) => {
