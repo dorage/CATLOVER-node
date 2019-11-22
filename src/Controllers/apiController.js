@@ -86,7 +86,7 @@ export const getTotalRank = async (req, res) => {
         ]).limit(10);
         const girlsPromise = girlRank.map(async elem => {
             const girl = await Girl.findById(elem._id, { name: true });
-            return { _id: girl._id, name: name, like: elem.like };
+            return { _id: girl._id, name: girl.name, like: elem.like };
         });
         const girls = await Promise.all(girlsPromise);
 
