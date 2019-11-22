@@ -93,7 +93,7 @@ export const getTotalRank = async (req, res) => {
         res.send({ results: { posts, girls } });
     } catch (e) {
         console.log(e);
-        res.send(Response.error(e));
+        res.send({ e });
     }
 };
 
